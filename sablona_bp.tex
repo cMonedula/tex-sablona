@@ -42,8 +42,11 @@
 	\renewcommand{\footrulewidth}{0pt}
 }
 
-\captionsetup[table]{labelsep=space,justification=raggedleft,singlelinecheck=off}
-\captionsetup[figure]{labelsep=space}
+\captionsetup[table]{labelsep=space,justification=centerlast,singlelinecheck=off,font=small}
+\captionsetup[figure]{labelsep=space,justification=centerlast,font=small}
+% pokiaľ chceš mať písmo popiskov rovnakej veľkosti ako text, použi nasledujúce riadky
+% \captionsetup[table]{labelsep=space,justification=centerlast,singlelinecheck=off}
+% \captionsetup[figure]{labelsep=space,justification=centerlast}
 
 \parskip=5pt plus 1pt % medzera medzi odsekmi
 \renewcommand{\baselinestretch}{1.5} % riadkovanie
@@ -101,7 +104,7 @@ numsep=1em
 \renewcommand{\theexamplealph}{\Alph{examplealph}}
 
 \graphicspath{{images/}} % priečinok kde sú uložené obrázky
-\addbibresource{sablona_bp.bib}
+\addbibresource{sources.bib}
 
 \begin{document}
 %\listoftodos % list na todo
