@@ -1,153 +1,250 @@
-\documentclass[12]{article}
+\documentclass[11pt]{article}
+
+% --- 1. Kódovanie a fonty ---
 \usepackage[T1]{fontenc}
-\usepackage{tocloft}
-\usepackage{tocbasic}
-\usepackage{tabularx}
-\usepackage{lipsum}
-\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{helvet}
+% \usepackage[sfdefault]{atkinson}
+\renewcommand{\familydefault}{\sfdefault}
+\DeclareMathAlphabet{\mathsf}{T1}{phv}{m}{n}
+\SetMathAlphabet{\mathsf}{bold}{T1}{phv}{b}{n}
+
+% --- 2. Jazyk a typografia ---
+\usepackage[english,czech,main=slovak]{babel}
+\usepackage{csquotes}
+\usepackage{microtype}
+\usepackage{indentfirst}
+
+% --- 3. Geometria a rozloženie ---
 \usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+
+% --- 4. Matematika a chémia ---
 \usepackage{amsmath}
+\usepackage{bm}
+\usepackage{chemformula}
+
+% --- 5. Grafika a tabuľky ---
+\usepackage{graphicx}
 \usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage{threeparttable}
+\usepackage{pdfpages}
+\usepackage{rotating}
+
+% --- 6. Formátovanie textu ---
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{ragged2e}
-\usepackage{caption}
-\usepackage{fancyhdr}
 \usepackage{todonotes}
-\usepackage{indentfirst} % odsadenie prvého riadku v odseku
-\usepackage{pdfpages}
 \usepackage{moreverb}
-\usepackage{subcaption}
-\usepackage{notoccite} % nezoraďovať citácie podľa table of contents
-\usepackage[english,czech,main=slovak]{babel}
-\usepackage[style=iso-numeric,currentlang=true,backend=biber]{biblatex}
-\usepackage{csquotes}
-% \usepackage{chemformula}
-\usepackage{bm}
-\usepackage{hyperref}
+\usepackage{hanging}
+\usepackage[normalem]{ulem}
+\usepackage{lipsum}
 
-% nastavenie typu písma
-%\usepackage{mathptmx} % times new roman font
-\usepackage{helvet} % arial font
-\renewcommand{\familydefault}{\sfdefault}
+% --- 7. Bibliografia ---
+\usepackage{notoccite}
+\usepackage[
+    style=iso-numeric,
+    url=true,
+    currentlang=true,
+    backend=biber,
+    sortcites=true,
+    doi=true,
+    isbn=true
+]{biblatex}
+\addbibresource{zdroje.bib}
 
-\fancyhf{} % clear all header and footers
-\renewcommand{\headrulewidth}{0pt} % remove the header rule
+% --- 8. Hyperref ---
+\usepackage[colorlinks=false,hidelinks=true]{hyperref}
+\usepackage{xurl}
+
+% HEADER / FOOTER
+
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
 \rfoot{\thepage}
+%\pagestyle{fancy}
 
 \fancypagestyle{plain}{
-	\fancyhf{} % clear all header and footer fields
-	\fancyhead{} % clear all header fields
-	\fancyfoot{} % clear all footer fields
-	\rfoot{\thepage}
-	\renewcommand{\headrulewidth}{0pt}
-	\renewcommand{\footrulewidth}{0pt}
+    \fancyhead{} % clear all header fields
+    \fancyfoot{} % clear all footer fields
+    \rfoot{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
 }
 
-\captionsetup[table]{labelsep=space,justification=centerlast,singlelinecheck=off,font=small}
-\captionsetup[figure]{labelsep=space,justification=centerlast,font=small}
-% pokiaľ chceš mať písmo popiskov rovnakej veľkosti ako text, použi nasledujúce riadky
-% \captionsetup[table]{labelsep=space,justification=centerlast,singlelinecheck=off}
-% \captionsetup[figure]{labelsep=space,justification=centerlast}
+% GEOMETRIA
 
-\parskip=5pt plus 1pt % medzera medzi odsekmi
-\renewcommand{\baselinestretch}{1.5} % riadkovanie
 \geometry{
-	a4paper,
-	left=3.5cm,
-	right=2.5cm,
-	top=1.25cm,
-	bottom=1.25cm,
-	headheight=0.5cm,
-	includefoot,
-	includehead
-} % nastavenie okrajov strany
+    a4paper,
+    left=3.5cm,
+    right=2.5cm,
+    top=1.25cm,
+    bottom=1.25cm,
+    headheight=0.5cm,
+    includefoot,
+    includehead
+}
 
-% ----- konfigurácia pomenovania zoznamov a popisov -----
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % bodky v obsahu
-\addto\captionsslovak{	% prepísanie makier z babel balíčka na požadovanú hodnotu
-	\renewcommand{\contentsname}{Obsah} % premenovanie zoznamov do slovenčiny
+% RIADKOVANIE
+
+\parskip=5pt plus 1pt
+\renewcommand{\baselinestretch}{1.5}
+
+% CAPTIONS
+
+\captionsetup{
+    skip=8pt,
+    belowskip=0pt,
+    labelsep=space,
+    justification=centerlast,
+    font=small
 }
-\newcommand\entrynumberwithprefix[2]{#1\enspace#2:\hfill}
-\DeclareTOCStyleEntry[ % pridanie obr. pred názov obrázku do zoznamu obrázkov
-entrynumberformat=\entrynumberwithprefix{\figurename},
-dynnumwidth,
-numsep=1em
-]{tocline}{figure}
-\DeclareTOCStyleEntry[ % pridanie tab. pred názov tabuľky
-entrynumberformat=\entrynumberwithprefix{\tablename},
-dynnumwidth,
-numsep=1em
-]{tocline}{table}
+\captionsetup[table]{singlelinecheck=off}
+
+% SLOVENČINA
+
 \addto\captionsslovak{
-	\renewcommand{\listfigurename}{Zoznam obrázkov}
-	\renewcommand{\listtablename}{Zoznam tabuliek}
-	\renewcommand{\refname}{Zoznam použitej literatúry}
-	\renewcommand{\figurename}{Obr.} % úprava popisov pre obrázky
-	\counterwithin{figure}{section} % štrukturované číslovanie obrázkov
+    \renewcommand{\contentsname}{Obsah}
+    \renewcommand{\listfigurename}{Zoznam obrázkov}
+    \renewcommand{\listtablename}{Zoznam tabuliek}
+    \renewcommand{\refname}{Zoznam použitej literatúry}
+    \renewcommand{\figurename}{Obr.}
+    \renewcommand{\tablename}{Tab.}
+    \counterwithin{figure}{section}
+    \counterwithin{table}{section}
+    \counterwithin{equation}{section}
 }
+
+% ČÍSLOVANIE
+
 \renewcommand{\thefigure}{\arabic{figure}}
-
-\addto\captionsslovak{
-	\renewcommand{\tablename}{Tab.} % zmena popisu tabuľky
-	\counterwithin{table}{section}
-	\counterwithin{equation}{section}
-}
 \renewcommand{\thetable}{\arabic{table}}
-% ----- vytvorenie zoznamu pre prílohy -----
+
+% PRÍLOHY
+
+\usepackage{tocbasic}
+
 \newcommand{\listexamplename}{\Large Zoznam príloh}
 \newlistof{example}{exp}{\listexamplename}
+
 \newcounter{examplealph}
-\newcommand{\example}[1]{%
-	\refstepcounter{examplealph}
-	\par\noindent\section*{Príloha \Alph{examplealph}: #1}
-	\addcontentsline{exp}{example}
-	{\textbf{Príloha \protect\numberline{\Alph{examplealph}}}#1}\par}
+
+\DeclareNewTOC[
+  type=figureapp,
+  listname={\Large Zoznam obrázkov v~prílohách}
+]{laf}
+
+\DeclareNewTOC[
+  type=tableapp,
+  listname={\Large Zoznam tabuliek v~prílohách}
+]{lat}
+
+\makeatletter
+\newcommand{\example}[2]{%
+    \refstepcounter{examplealph}
+    \label{#2}
+
+    \setcounter{figure}{0}
+    \setcounter{table}{0}
+
+    \renewcommand{\thefigure}{\Alph{examplealph}.\arabic{figure}}
+    \renewcommand{\thetable}{\Alph{examplealph}.\arabic{table}}
+
+    \def\ext@figure{laf}
+    \def\ext@table{lat}
+
+    \section*{Príloha \Alph{examplealph}: #1}
+    \addcontentsline{exp}{example}{\textbf{Príloha \protect\numberline{\Alph{examplealph}}}#1}\par
+}
+\makeatother
+
 \renewcommand{\theexamplealph}{\Alph{examplealph}}
 
-\graphicspath{{images/}} % priečinok kde sú uložené obrázky
-\addbibresource{sources.bib}
+% OBSAH + ZOZNAMY
+
+% ---- Obsah ----
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+\setlength{\cftbeforesecskip}{2pt}
+\setlength{\cftsecnumwidth}{2.5em}
+\setlength{\cftsubsecindent}{2.5em}
+\setlength{\cftsubsecnumwidth}{3em}
+
+% ---- Zoznam obrázkov ----
+\setlength{\cftfigindent}{0pt}
+\setlength{\cftfignumwidth}{5em}
+\renewcommand{\cftfigpresnum}{Obr.\ }
+\renewcommand{\cftfigaftersnum}{:\ }
+\renewcommand{\cftfigleader}{\cftdotfill{\cftdotsep}}
+
+% ---- Zoznam tabuliek ----
+\setlength{\cfttabindent}{0pt}
+\setlength{\cfttabnumwidth}{5em}
+\renewcommand{\cfttabpresnum}{Tab.\ }
+\renewcommand{\cfttabaftersnum}{:\ }
+\renewcommand{\cfttableader}{\cftdotfill{\cftdotsep}}
+
+% -------------------------------------------------
+
+\graphicspath{{images/}}
+
+% \usepackage{showframe}
+% \renewcommand\ShowFrameLinethickness{0.15pt}
+% \renewcommand*\ShowFrameColor{\color{red}}
 
 \begin{document}
-%\listoftodos % list na todo
-%\pagebreak
-%\input{titulna_strana} % titulna strana na záverečnú prácu
-\input{titulna_strana_projekt2}
 
-%\input{uvodne_strany} % vloženie úvodných strán
-\input{uvodne_strany_projekt} % vloženie úvodných strán
+\input{titulna_strana} % titulna strana na záverečnú prácu
 
-\newpage % obsah, zoznam obrázkov a tabuliek
+\input{uvodne_strany} % vloženie úvodných strán
+
+\clearpage
 \tableofcontents
-\newpage
+\clearpage
 \listoffigures
-\newpage
+%\clearpage
 \listoftables
+\clearpage
 
-\input{skratky_symboly} % vloženie zoznami skratiek a symbolov
+\input{skratky_symboly} % vloženie zoznamu skratiek a symbolov
 
 % obsahová časť práce začínajúca s úvodom
 \newpage
 \pagestyle{fancy}
 \pagenumbering{arabic}
-\setcounter{page}{1} % zapnutie číslovania strán od hodnoty 10
+\setcounter{page}{1} % zapnutie číslovania strán od hodnoty
+\phantomsection
 \addcontentsline{toc}{section}{Úvod} % pridanie nečíslovaných kapitol do obsahu
 \section*{Úvod} % sekcia bez čísla
 Text úvodu ide sem.
 
-\newpage
-\section{Úvod do problematiky}
-Príklad obrázku, test slovenskej diakritiky (mäkčene a dĺžne by mali byť na správnom mieste) \\
+\newpage \phantomsection \section{Úvod do problematiky}
+Príklad obrázku, test slovenskej diakritiky (mäkčene a~dĺžne by mali byť na správnom mieste) \\
 \textbf{ľ Ľ ĺ Ĺ š Š č Č ť Ť ž Ž ň Ň ď Ď ý Ý á Á í Í é É ú Ú ä Ä ô Ô ó Ó}
+
 \begin{figure}[H] % H - zobrazenie kde sa nachádza v tex súbore
 \centering
 \includegraphics{logo.jpg}
 \caption{obrázok}
 \label{img:obrazok}
 \end{figure}
+
 \subsection{podkapitola}
-Podkapitola v dokumente, citovanie vyzerá takto \cite{modernrob}, odkázanie sa na obrázok \ref{img:obrazok}
+Podkapitola v~dokumente, citovanie vyzerá takto \cite{modernrob}, odkázanie sa na obrázok \ref{img:obrazok}
+
+Príklad poznámky pod čiarou
+
+Ghosting\footnote{Slovo ghost je možné preložiť ako duch, preto sa na niektorých pracoviskách a~v~ich publikáciách ujali pojmy ako \uv{duchovia} a~\uv{duchy} \textit{(sic)}.} alebo nesprávne priradenie fáz (phase mismapping) je dôsledkom pohybu subjektu v~smere fázu kódujúceho gradientu. Bežne ho vyvolávajú javy ako dýchanie (zmeny v~pozícii tela vzhľadom na inspírium a~exspírium) a~pulzný pohyb krvi.
+
 \subsubsection{Pod-podkapitola}
 Príklad tabuľky
+
 \begin{table}[H]
 	\centering
 	\caption{tabulka}
@@ -158,7 +255,9 @@ Príklad tabuľky
 		4 & 2 \\ \hline
 	\end{tabular}
 \end{table}
-\section{Teoretické poznatky}
+
+\newpage \phantomsection \section{Teoretické poznatky}
+
 \begin{figure}[H] % H - zobrazenie kde sa nachádza v tex súbore
 \centering
 \includegraphics{logo}
@@ -166,30 +265,106 @@ Príklad tabuľky
 \label{img:test}
 \end{figure}
 
-% hlavná obsahová časť práce
+Príklad rovnice s~vysvetlivkami
+
+\begin{equation}
+\omega_{csf} = \omega_0 \cdot C_s
+\label{math:chemicalshift}
+\end{equation}
+\begin{small}
+\begin{tabbing}
+% This line sets the tab positions based on the longest symbol + units
+kde \= $\omega_{csf}$ \= $\mathsf{\left[ ppm \right]}$ \= \kill 
+kde \> $\omega_{csf}$ \> $\mathsf{\left[ Hz \right]}$ \> -- frekvenčný rozdiel chemického posunu tuku a~vody \\
+\> $\omega_0\ $ \> $\mathsf{\left[ Hz \right]}$\> -- precesná (Larmorova) frekvencia \\
+\> $C_s$ \> $\mathsf{\left[ ppm \right]}$ \> -- chemický posun ($\mathsf{3,5\ ppm}$ alebo $\mathsf{3,5 \cdot 10^{-6}}$)
+\end{tabbing}
+\end{small}
+
+% tu končí hlavná obsahová časť práce
 
 \newpage % záver
-\addcontentsline{toc}{section}{Záver}
+\phantomsection \addcontentsline{toc}{section}{Záver}
 \section*{Záver}
 text záveru
 
-\newpage % zoznam použitej literatúry
-\DeclareDelimFormat{finalnamedelim}{%
-  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+\clearpage % zoznam použitej literatúry
+\DeclareDelimFormat{finalnamedelim}{
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}
   \addspace\bibstring{and}\space}
 \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
-\DeclareFieldFormat{url}{\href{#1}{\mkbibacro{URL}}}
+% \DeclareFieldFormat{url}{\href{#1}{\mkbibacro{URL}}}
 \printbibliography[heading=bibintoc,title=Zoznam použitej literatúry]
 
-% \newpage % začiatok príloh
-% \vspace*{\fill}
-% \addcontentsline{toc}{section}{Prílohy}
-% \begin{center} \section*{Prílohy} \end{center}
-% \vspace*{\fill}
+\section*{Zoznam použitých promptov}
+{
+\setlength{\parindent}{0pt}
+\textit{\uv{Ako by si upravil tento konkrétny text?}}, Gemini 3.1 Pro, Google, používaný priebežne počas vypracovania práce v~období november~2025 až apríl~2026, gemini.google.com.
+\par
+}
 
-% \newpage % zoznam príloh
-% \listofexample
+\newpage % začiatok príloh
+\pagenumbering{roman}
+\vspace*{\fill}
+\phantomsection
+\addcontentsline{toc}{section}{Prílohy}
+\begin{center} \section*{Prílohy} \end{center}
+\vspace*{\fill}
 
+\newpage % zoznam príloh
+\listofexample
+
+\newpage
+\listoftoc{laf}
 % \newpage
-% \example{Príklad prílohy}
+\listoftoc{lat}
+
+\clearpage
+% \enlargethispage{1cm}
+\example{Príklad figúry zloženej z~viacerých subfigúr}{priloha:vzor}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.85\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{logo.pdf} 
+        \caption{pred korekciami matematického aparátu}
+        \label{img:alfagraf}
+    \end{subfigure}
+    \hfill % This pushes the images to the edges
+    \begin{subfigure}{0.85\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{logo.pdf}
+        \caption{po korekciách matematického aparátu}
+        \label{img:betagraf}
+    \end{subfigure}
+    \caption[Meranie zo dňa 6. 3. 2026 spracované skriptom \texttt{\allowbreak Gradient\allowbreak Offset\break Calibration\allowbreak .m}]{Meranie zo dňa 6. 3. 2026 spracované skriptom \texttt{\allowbreak Gradient\allowbreak Offset\allowbreak Calibration\allowbreak .m}}
+	\label{img:prvemeranie}
+\end{figure}
+
+\clearpage
+\example{Príklad tabuľky s~poznámkami pod čiarou}{priloha:vzor2}
+
+\begin{table}[H]
+    \centering
+    \begin{threeparttable}
+        \centering
+        \caption{Prehľad súvislých meraní použitých v~tejto práci}
+        \label{tab:prehlad}
+        \begin{tabular}{p{2cm} p{1.6cm} p{2.4cm} p{2.9cm} p{1.7cm}}
+            \hline
+            Dátum & Počet ($n$) meraní & Atmosférická teplota\tnote{a} & Tlak chladiaceho okruhu & Odkaz na dáta \\ \hline
+            27. 3. 2026 & 10 & 2,2~-- 6,9~°C & 140~-- 205 kPa & príloha \ref{priloha:vzor}\\
+            30. 3. 2026 & 12 & 3,9~-- 8,4~°C & 140~-- 160 kPa & príloha \ref{priloha:vzor}\\
+            15. 4. 2026 & 22 & 10,3~-- 17,3~°C & 150~-- 160 kPa & príloha \ref{priloha:vzor}\\
+            21. 4. 2026 & 8 & 5,9~-- 12,8~°C & 140~-- 160 kPa & príloha \ref{priloha:vzor}\\
+            \hline
+        \end{tabular}
+        \begin{tablenotes}
+            \small
+            \item [a] Dáta o~atmosférickej teplote boli získané z~projektu Open-Meteo pre polohu určenú zemepisnou dĺžkou 48,1697 a~šírkou 17,0688 (vo formáte decimálnych stupňov).
+        \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
 \end{document}
